@@ -1,11 +1,16 @@
 
 provider "aws" {
-  access_key = "ACCESS_KEY_HERE"
-  secret_key = "SECRET_KEY_HERE"
-  region     = "us-east-1"
+  region                  = "eu-west-1"
+  shared_credentials_file = "/Users/richard/.aws/credentials"
+  profile                 = "sbx"
 }
 
 resource "aws_instance" "example" {
-  ami           = "ami-2757f631"
+  # Ireland region, Amazon Linux AMI 2017.09.1, free tier eligible
+  ami           = "ami-d834aba1"
   instance_type = "t2.micro"
+}
+
+resource "aws_eip" "ip" {
+  instance = "${aws_instance.example.id}"
 }
